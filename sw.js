@@ -26,20 +26,24 @@ workbox.clientsClaim();
  */
 self.__precacheManifest = [
   {
-    "url": "webpack-runtime-0aa1776cedf1aa92f5a3.js"
+    "url": "webpack-runtime-21159e6fd977845292a1.js"
   },
   {
     "url": "commons-42b02df52cab78539470.js"
   },
   {
-    "url": "app-01512461c40283336b78.js"
+    "url": "app-206e06664bdf2038c3f3.js"
   },
   {
     "url": "component---node-modules-gatsby-plugin-offline-app-shell-js-a7388efdc62430243a75.js"
   },
   {
     "url": "offline-plugin-app-shell-fallback/index.html",
-    "revision": "d4e75085c378fc06915391fe49d0df4d"
+    "revision": "b6031a7ed69bed1bc7fdcd06fa1db004"
+  },
+  {
+    "url": "page-data/offline-plugin-app-shell-fallback/page-data.json",
+    "revision": "d274adf0f008ef152ce70a312b04b730"
   },
   {
     "url": "manifest.webmanifest",
@@ -62,12 +66,12 @@ const { NavigationRoute } = workbox.routing
 
 const navigationRoute = new NavigationRoute(async ({ event }) => {
   let { pathname } = new URL(event.request.url)
-  pathname = pathname.replace(new RegExp(`^`), ``)
+  pathname = pathname.replace(new RegExp(`^/rhytest`), ``)
 
   // Check for resources + the app bundle
   // The latter may not exist if the SW is updating to a new version
   const resources = await idbKeyval.get(`resources:${pathname}`)
-  if (!resources || !(await caches.match(`/app-01512461c40283336b78.js`))) {
+  if (!resources || !(await caches.match(`/rhytest/app-206e06664bdf2038c3f3.js`))) {
     return await fetch(event.request)
   }
 
@@ -80,7 +84,7 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
     }
   }
 
-  const offlineShell = `/offline-plugin-app-shell-fallback/index.html`
+  const offlineShell = `/rhytest/offline-plugin-app-shell-fallback/index.html`
   return await caches.match(offlineShell)
 })
 
